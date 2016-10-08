@@ -16,5 +16,6 @@ public class Solution2 {
         }
         result = calculateProgression(a + q, q);
         return result;
+        //gdfgdfg
     }
 }
