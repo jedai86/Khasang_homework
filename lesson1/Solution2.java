@@ -8,14 +8,12 @@ public class Solution2 {
         calculateProgression(0, 5);
     }
 
-    static int calculateProgression(int a, int q) {
+    static void calculateProgression(int a, int q) {
         System.out.println(a);
-        int result;
-        if (a >= 100) {
-            return a;
+        if (a > 100) {
+            return;
         }
-        result = calculateProgression(a + q, q);
-        return result;
-        //gdfgdfg
+        int b = a + q;
+        calculateProgression(b, q);
     }
 }
