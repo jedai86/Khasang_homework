@@ -12,7 +12,7 @@ public class TestIfElse {
         testFor(6);
     }
 
-    private static void testFor(int i) {
+    static void testFor(int i) {
         for (int j = 0; j < i; j++) {
             System.out.println(i*j);
         }
