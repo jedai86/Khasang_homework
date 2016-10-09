@@ -10,10 +10,9 @@ public class Solution2 {
 
     static void calculateProgression(int a, int q) {
         System.out.println(a);
-        if (a > 100) {
-            return;
+        if (a < 100) {
+            calculateProgression(a+q, q);
         }
-        int b = a + q;
-        calculateProgression(b, q);
+
     }
 }
