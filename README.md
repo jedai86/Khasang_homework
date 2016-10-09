@@ -1,2 +1,2 @@
 # Khasang_homework
-home work khasang
+home work for khasang.io courses.
