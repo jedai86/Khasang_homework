@@ -6,19 +6,20 @@ import java.util.Scanner;
  * Created by Jedai86 on 10.10.2016.
  */
 public class Exercise2 {
-    public static final int NUMBER = 10;
+    public static final int NUMBER_COUNT = 10;
+    public static int[] numbers = new int[NUMBER_COUNT];
 
     public static void main(String[] args) {
-        int[] nums = new int[NUMBER];
-        System.out.printf("Enter %d numbers: \n", NUMBER);
-        initializeArray(nums);
-        sortArray(nums);
-        printArray(nums);
+
+        System.out.printf("Enter %d numbers: \n", NUMBER_COUNT);
+        initializeArray();
+        sortArray();
+        printArray();
     }
 
-    static void printArray(int[] nums) {
+    static void printArray() {
         System.out.println("Array: ");
-        for (int num : nums) {
+        for (int num : numbers) {
             System.out.println(num);
         }
     }
@@ -27,13 +28,13 @@ public class Exercise2 {
         System.out.println("Not valid number, enter another: ");
     }
 
-    static void initializeArray(int[] nums) {
-        for (int i = 0; i < nums.length; i++) {
+    static void initializeArray() {
+        for (int i = 0; i < numbers.length; i++) {
             boolean notExit = true;
             do {
                 Scanner scan = new Scanner(System.in);
                 if (scan.hasNextInt()) {
-                    nums[i] = scan.nextInt();
+                    numbers[i] = scan.nextInt();
                     notExit = false;
                 } else {
                     printErrMessage();
@@ -42,13 +43,13 @@ public class Exercise2 {
         }
     }
 
-    static void sortArray(int[] nums) {
-        for (int i = nums.length - 1; i > 1; i--) {
+    static void sortArray() {
+        for (int i = numbers.length - 1; i > 1; i--) {
             for (int j = 0; j < i ; j++) {
-                if (nums[j] < nums[j+1]) {
-                    int tmp = nums[j];
-                    nums[j] = nums[j+1];
-                    nums[j+1] = tmp;
+                if (numbers[j] < numbers[j+1]) {
+                    int tmp = numbers[j];
+                    numbers[j] = numbers[j+1];
+                    numbers[j+1] = tmp;
                 }
             }
 

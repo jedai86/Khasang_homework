@@ -7,29 +7,29 @@ import java.util.Scanner;
  */
 public class Exercise1 {
     public static void main(String[] args) {
-        int a, b;
+        int a;
+        int b;
         System.out.println("Enter first number: ");
         System.out.print("> ");
-        a = getIntegerFromUser();
+        a = getNumberFromUser();
         System.out.println("Enter second number: ");
         System.out.print("> ");
-        b = getIntegerFromUser();
+        b = getNumberFromUser();
         calculate(a, b);
     }
 
-    static int getIntegerFromUser() {
-        int num = 0;
-        boolean notExit = true;
+    static int getNumberFromUser() {
+        int num;
         do {
             Scanner scan = new Scanner(System.in);
             if (scan.hasNextInt()) {
                 num = scan.nextInt();
-                notExit = false;
+                break;
             } else {
                 System.out.println("You entered invalid number, try once more");
                 System.out.print("> ");
             }
-        } while (notExit);
+        } while (true);
         return num;
     }
 
