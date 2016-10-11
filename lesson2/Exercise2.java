@@ -30,16 +30,15 @@ public class Exercise2 {
 
     static void initializeArray() {
         for (int i = 0; i < numbers.length; i++) {
-            boolean notExit = true;
             do {
                 Scanner scan = new Scanner(System.in);
                 if (scan.hasNextInt()) {
                     numbers[i] = scan.nextInt();
-                    notExit = false;
+                    break;
                 } else {
                     printErrMessage();
                 }
-            } while (notExit);
+            } while (true);
         }
     }
 
