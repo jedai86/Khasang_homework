@@ -1,7 +1,5 @@
 package lesson2;
 
-import java.util.Scanner;
-
 /**
  * Created by Jedai86 on 10.10.2016.
  */
@@ -24,21 +22,9 @@ public class Exercise2 {
         }
     }
 
-    static void printErrMessage() {
-        System.out.println("Not valid number, enter another: ");
-    }
-
     static void initializeArray() {
         for (int i = 0; i < numbers.length; i++) {
-            do {
-                Scanner scan = new Scanner(System.in);
-                if (scan.hasNextInt()) {
-                    numbers[i] = scan.nextInt();
-                    break;
-                } else {
-                    printErrMessage();
-                }
-            } while (true);
+            numbers[i] = Shared.getNumberFromUser();
         }
     }
 
