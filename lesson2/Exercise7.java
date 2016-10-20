@@ -21,8 +21,8 @@ public class Exercise7 {
         while (count > 0) {
             Scanner scan = new Scanner(System.in);
             boolean isValid = false;
-            printArray();
-            System.out.printf("Enter number of element to put your char (from 1 to %d) or 0 to exit:\n> ", field.length);
+            showField();
+            System.out.printf("Enter number of element to put your char (from 1 to %d) or 0 to exit:%n> ", field.length);
             int elementNumber = Shared.getNumberFromUser();
 
             if (elementNumber <= field.length && elementNumber > 0) {
@@ -38,7 +38,7 @@ public class Exercise7 {
             }
 
             if (isValid) {
-                System.out.printf("Enter char:\n> ");
+                System.out.printf("Enter char:%n> ");
                 char c = scan.nextLine().charAt(0);
                 field[elementNumber - 1] = c;
                 count--;
@@ -46,7 +46,7 @@ public class Exercise7 {
         }
     }
 
-    static void printArray() {
+    static void showField() {
         for (int i = 0; i < field.length; i++) {
             System.out.print(field[i] + " ");
             if ((i + 1) % ROW_SIZE == 0) {

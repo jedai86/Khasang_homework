@@ -26,7 +26,7 @@ public class Shared {
         for (int i = 0; i < emptyWordArray.length; i++) {
             emptyWordArray[i] = '_';
         }
-        System.out.printf("Your word consists of %d letters: \n", word.length);
+        System.out.printf("Your word consists of %d letters: %n", word.length);
         printCharArray(emptyWordArray);
         System.out.println("Enter the letter, or 0 to exit");
         char letter;
@@ -59,7 +59,7 @@ public class Shared {
             }
             printCharArray(emptyWordArray);
             if (guessedLetters == word.length) {
-                System.out.printf("Congratulations! You guess the word with %d attempts!\n", counter);
+                System.out.printf("Congratulations! You guess the word with %d attempts!%n", counter);
                 break;
             }
         }

@@ -9,7 +9,7 @@ public class Exercise2 {
 
     public static void main(String[] args) {
 
-        System.out.printf("Enter %d numbers: \n", NUMBER_COUNT);
+        System.out.printf("Enter %d numbers: %n", NUMBER_COUNT);
         initializeArray();
         sortArray();
         printArray();

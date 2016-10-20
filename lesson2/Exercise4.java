@@ -9,7 +9,7 @@ public class Exercise4 {
         final int MAX_VALUE = 10;
         final int EXIT_VALUE = 0;
         final int TARGET_SUM = 21;
-        System.out.printf("Enter numbers from %d to %d (enter %d to exit): \n> ", MIN_VALUE, MAX_VALUE, EXIT_VALUE);
+        System.out.printf("Enter numbers from %d to %d (enter %d to exit): %n> ", MIN_VALUE, MAX_VALUE, EXIT_VALUE);
         int sum = 0;
         while (true) {
             int n = Shared.getNumberFromUser();

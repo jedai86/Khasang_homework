@@ -5,11 +5,11 @@ package lesson2;
  */
 public class Exercise3 {
     public static void main(String[] args) {
-        System.out.print("Enter k: \n> ");
+        System.out.print("Enter k: %n> ");
         int k = Shared.getNumberFromUser();
-        System.out.print("Enter t: \n> ");
+        System.out.print("Enter t: %n> ");
         int t = Shared.getNumberFromUser();
-        System.out.print("Enter n: \n> ");
+        System.out.print("Enter n: %n> ");
         int n = Shared.getNumberFromUser();
         int[] array1 = new int[n];
         int[] array2 = new int[n];
