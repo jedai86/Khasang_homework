@@ -45,7 +45,16 @@ public class GameXO {
     }
 
     static int gameState() {
-
+        for (int i = 0; i < SIZE; i++) {
+            int countPlayer1 = 0;
+            int countPlayer2 = 0;
+            for (int j = 0; j < SIZE; j++) {
+                if (field[i][j] == player1Char) countPlayer1++;
+                if (field[i][j] == player2Char) countPlayer2++;
+            }
+            if (countPlayer1 == SIZE) return 1;
+            if (countPlayer2 == SIZE) return 2;
+        }
         return 0;
     }
 
