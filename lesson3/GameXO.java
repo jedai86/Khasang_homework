@@ -27,21 +27,18 @@ public class GameXO {
                 makeMove(player2Char);
                 firstPlayerMove = true;
             }
-            if (gameState() != 0) {
-                switch (gameState()) {
-                    case 1:
-                        System.out.println("Player 1 win!");
-                        break;
-                    case 2:
-                        System.out.println("Player 2 win!");
-                        break;
-                    case 3:
-                        System.out.println("Nobody win");
-                        break;
-                }
-                break;
+            switch (gameState()) {
+                case 1:
+                    System.out.println("Player 1 win!");
+                    return;
+                case 2:
+                    System.out.println("Player 2 win!");
+                    return;
+                case 0:
+                    break;
             }
         }
+        System.out.println("Nobody's win!");
     }
 
     static int gameState() {
@@ -49,8 +46,24 @@ public class GameXO {
             int countPlayer1 = 0;
             int countPlayer2 = 0;
             for (int j = 0; j < SIZE; j++) {
-                if (field[i][j] == player1Char) countPlayer1++;
-                if (field[i][j] == player2Char) countPlayer2++;
+                if (field[i][j] == player1Char) {
+                    countPlayer1++;
+                } else if (field[i][j] == player2Char) {
+                    countPlayer2++;
+                }
+            }
+            if (countPlayer1 == SIZE) return 1;
+            if (countPlayer2 == SIZE) return 2;
+        }
+        for (int j = 0; j < SIZE; j++) {
+            int countPlayer1 = 0;
+            int countPlayer2 = 0;
+            for (int i = 0; i < SIZE; i++) {
+                if (field[i][j] == player1Char) {
+                    countPlayer1++;
+                } else if (field[i][j] == player2Char) {
+                    countPlayer2++;
+                }
             }
             if (countPlayer1 == SIZE) return 1;
             if (countPlayer2 == SIZE) return 2;
@@ -70,7 +83,7 @@ public class GameXO {
     }
 
     static int randCoordinate() {
-        return (int) (SIZE*Math.random());
+        return (int) (SIZE * Math.random());
     }
 
     static boolean hasEmpty() {
