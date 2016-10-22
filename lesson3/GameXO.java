@@ -18,49 +18,119 @@ public class GameXO {
             }
         }
         boolean firstPlayerMove = true;
-        while (hasEmpty()) {
-            showField();
+        boolean moveSuccessful;
+        showField();
+        while (true) {
             if (firstPlayerMove) {
-                makeMove(player1Char);
+                moveSuccessful = makeMove(player1Char);
+                if (!moveSuccessful) {
+                    System.out.println("Ничья!");
+                    break;
+                }
                 firstPlayerMove = false;
             } else {
-                makeMove(player2Char);
+                moveSuccessful = makeMove(player2Char);
+                if (!moveSuccessful) {
+                    System.out.println("Ничья!");
+                    break;
+                }
                 firstPlayerMove = true;
             }
-            if (gameState() != 0) {
-                switch (gameState()) {
-                    case 1:
-                        System.out.println("Player 1 win!");
-                        break;
-                    case 2:
-                        System.out.println("Player 2 win!");
-                        break;
-                    case 3:
-                        System.out.println("Nobody win");
-                        break;
-                }
+            showField();
+            int state = gameState();
+            if (state == 1) {
+                System.out.println("Выиграл игрок 1!");
+                break;
+            } else if (state == 2) {
+                System.out.println("Выиграл игрок 2!");
                 break;
             }
         }
     }
 
     static int gameState() {
+        for (int i = 0; i < SIZE; i++) {
+            int countPlayer1 = 0;
+            int countPlayer2 = 0;
+            for (int j = 0; j < SIZE; j++) {
+                if (field[i][j] == player1Char) {
+                    countPlayer1++;
+                } else if (field[i][j] == player2Char) {
+                    countPlayer2++;
+                }
+            }
+            if (countPlayer1 == SIZE) {
+                return 1;
+            } else if (countPlayer2 == SIZE) {
+                return 2;
+            }
+        }
+        for (int j = 0; j < SIZE; j++) {
+            int countPlayer1 = 0;
+            int countPlayer2 = 0;
+            for (int i = 0; i < SIZE; i++) {
+                if (field[i][j] == player1Char) {
+                    countPlayer1++;
+                } else if (field[i][j] == player2Char) {
+                    countPlayer2++;
+                }
+            }
+            if (countPlayer1 == SIZE) {
+                return 1;
+            } else if (countPlayer2 == SIZE) {
+                return 2;
+            }
+        }
+        int countPlayer1 = 0;
+        int countPlayer2 = 0;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (i == j) {
+                    if (field[i][j] == player1Char) {
+                        countPlayer1++;
+                    } else if (field[i][j] == player2Char) {
+                        countPlayer2++;
+                    }
+                }
+            }
+        }
+        if (countPlayer1 == SIZE) {
+            return 1;
+        } else if (countPlayer2 == SIZE) {
+            return 2;
+        }
 
-
-
-
+        countPlayer1 = 0;
+        countPlayer2 = 0;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (j == (SIZE-i-1)) {
+                    if (field[i][j] == player1Char) {
+                        countPlayer1++;
+                    } else if (field[i][j] == player2Char) {
+                        countPlayer2++;
+                    }
+                }
+            }
+        }
+        if (countPlayer1 == SIZE) {
+            return 1;
+        } else if (countPlayer2 == SIZE) {
+            return 2;
+        }
         return 0;
     }
 
-    static void makeMove(char playerChar) {
+    static boolean makeMove(char playerChar) {
         while (hasEmpty()) {
             int i = randCoordinate();
             int j = randCoordinate();
             if (field[i][j] == EMPTY_CHAR) {
                 field[i][j] = playerChar;
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     static int randCoordinate() {
