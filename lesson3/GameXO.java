@@ -26,8 +26,10 @@ public class GameXO {
     }
 
     void mainLoop() {
+
         boolean firstPlayerMove = true;
         boolean moveSuccessful;
+
         while (true) {
             if (firstPlayerMove) {
                 moveSuccessful = makeMove(player1Char);
@@ -57,9 +59,13 @@ public class GameXO {
     }
 
     int gameState() {
+
+        int countPlayer1;
+        int countPlayer2;
+
         for (int i = 0; i < SIZE; i++) {
-            int countPlayer1 = 0;
-            int countPlayer2 = 0;
+            countPlayer1 = 0;
+            countPlayer2 = 0;
             for (int j = 0; j < SIZE; j++) {
                 if (field[i][j] == player1Char) {
                     countPlayer1++;
@@ -73,9 +79,10 @@ public class GameXO {
                 return 2;
             }
         }
+
         for (int j = 0; j < SIZE; j++) {
-            int countPlayer1 = 0;
-            int countPlayer2 = 0;
+            countPlayer1 = 0;
+            countPlayer2 = 0;
             for (int i = 0; i < SIZE; i++) {
                 if (field[i][j] == player1Char) {
                     countPlayer1++;
@@ -89,8 +96,10 @@ public class GameXO {
                 return 2;
             }
         }
-        int countPlayer1 = 0;
-        int countPlayer2 = 0;
+
+        countPlayer1 = 0;
+        countPlayer2 = 0;
+
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (i == j) {
@@ -110,6 +119,7 @@ public class GameXO {
 
         countPlayer1 = 0;
         countPlayer2 = 0;
+
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (j == (SIZE - i - 1)) {
@@ -126,6 +136,7 @@ public class GameXO {
         } else if (countPlayer2 == SIZE) {
             return 2;
         }
+
         return 0;
     }
 
