@@ -5,34 +5,42 @@ package lesson3;
  */
 public class GameXO {
 
-    private static final char EMPTY_CHAR = '_';
-    private static final int SIZE = 3;
-    private static final char[][] field = new char[SIZE][SIZE];
-    private static final char player1Char = 'X';
-    private static final char player2Char = 'O';
+    private final char EMPTY_CHAR = '_';
+    private final int SIZE = 3;
+    private final char[][] field = new char[SIZE][SIZE];
+    private final char player1Char = 'X';
+    private final char player2Char = 'O';
 
     public static void main(String[] args) {
+        GameXO game = new GameXO();
+        game.showField();
+        game.mainLoop();
+    }
+
+    public GameXO() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 field[i][j] = EMPTY_CHAR;
             }
         }
+    }
+
+    void mainLoop() {
         boolean firstPlayerMove = true;
         boolean moveSuccessful;
-        showField();
         while (true) {
             if (firstPlayerMove) {
                 moveSuccessful = makeMove(player1Char);
                 if (!moveSuccessful) {
                     System.out.println("Ничья!");
-                    break;
+                    return;
                 }
                 firstPlayerMove = false;
             } else {
                 moveSuccessful = makeMove(player2Char);
                 if (!moveSuccessful) {
                     System.out.println("Ничья!");
-                    break;
+                    return;
                 }
                 firstPlayerMove = true;
             }
@@ -40,15 +48,15 @@ public class GameXO {
             int state = gameState();
             if (state == 1) {
                 System.out.println("Выиграл игрок 1!");
-                break;
+                return;
             } else if (state == 2) {
                 System.out.println("Выиграл игрок 2!");
-                break;
+                return;
             }
         }
     }
 
-    static int gameState() {
+    int gameState() {
         for (int i = 0; i < SIZE; i++) {
             int countPlayer1 = 0;
             int countPlayer2 = 0;
@@ -104,7 +112,7 @@ public class GameXO {
         countPlayer2 = 0;
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                if (j == (SIZE-i-1)) {
+                if (j == (SIZE - i - 1)) {
                     if (field[i][j] == player1Char) {
                         countPlayer1++;
                     } else if (field[i][j] == player2Char) {
@@ -121,7 +129,7 @@ public class GameXO {
         return 0;
     }
 
-    static boolean makeMove(char playerChar) {
+    boolean makeMove(char playerChar) {
         while (hasEmpty()) {
             int i = randCoordinate();
             int j = randCoordinate();
@@ -133,11 +141,11 @@ public class GameXO {
         return false;
     }
 
-    static int randCoordinate() {
-        return (int) (SIZE*Math.random());
+    int randCoordinate() {
+        return (int) (SIZE * Math.random());
     }
 
-    static boolean hasEmpty() {
+    boolean hasEmpty() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (field[i][j] == EMPTY_CHAR) {
@@ -148,7 +156,7 @@ public class GameXO {
         return false;
     }
 
-    static void showField() {
+    void showField() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 System.out.print(field[i][j] + " ");
@@ -157,5 +165,4 @@ public class GameXO {
         }
         System.out.println();
     }
-
 }
