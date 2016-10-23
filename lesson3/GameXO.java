@@ -10,6 +10,7 @@ public class GameXO {
     private final char[][] field = new char[SIZE][SIZE];
     private final char player1Char = 'X';
     private final char player2Char = 'O';
+    private int emptyCharsCount = SIZE*SIZE;
 
     public static void main(String[] args) {
         GameXO game = new GameXO();
@@ -141,11 +142,12 @@ public class GameXO {
     }
 
     boolean makeMove(char playerChar) {
-        while (hasEmpty()) {
+        while (emptyCharsCount > 0) {
             int i = randCoordinate();
             int j = randCoordinate();
             if (field[i][j] == EMPTY_CHAR) {
                 field[i][j] = playerChar;
+                emptyCharsCount--;
                 return true;
             }
         }
@@ -155,7 +157,7 @@ public class GameXO {
     int randCoordinate() {
         return (int) (SIZE * Math.random());
     }
-
+/*
     boolean hasEmpty() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
@@ -166,7 +168,7 @@ public class GameXO {
         }
         return false;
     }
-
+*/
     void showField() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
