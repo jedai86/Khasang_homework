@@ -7,17 +7,18 @@ import java.util.Scanner;
  */
 public class Shared {
     static int getNumberFromUser() {
+        Scanner scan = new Scanner(System.in);
         int num;
-        do {
-            Scanner scan = new Scanner(System.in);
+        while (true) {
             if (scan.hasNextInt()) {
                 num = scan.nextInt();
                 break;
             } else {
+                scan.nextLine();
                 System.out.println("You entered invalid number, try once more");
                 System.out.print("> ");
             }
-        } while (true);
+        }
         return num;
     }
 
