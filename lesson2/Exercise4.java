@@ -15,7 +15,8 @@ public class Exercise4 {
             int n = Shared.getNumberFromUser();
             if ((n >= -MAX_VALUE) && (n <= MAX_VALUE)) {
                 if (n == EXIT_VALUE) {
-                    break;
+                    System.out.println("You don't reach target sum, try later");
+                    return;
                 } else {
                     sum += n;
                 }
@@ -24,10 +25,9 @@ public class Exercise4 {
             }
             if (sum == TARGET_SUM) {
                 System.out.println("You reached target sum!");
-                break;
+                return;
             }
             System.out.print("> ");
         }
-        System.out.println("You don't reach target sum, try later");
     }
 }
