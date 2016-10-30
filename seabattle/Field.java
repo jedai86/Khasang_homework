@@ -86,11 +86,11 @@ class Field {
     void showField() {
         printLines();
         for (int i = 0; i < SIZE; i++) {
-            //       if (field[i] == SHIP_CELL) {
-            //           System.out.print(EMPTY_CELL + "  ");
-            //       } else {
-            System.out.print(field[i] + "  ");
-            //       }
+            if (field[i] == SHIP_CELL) {
+                System.out.print(EMPTY_CELL + "  ");
+            } else {
+                System.out.print(field[i] + "  ");
+            }
         }
         System.out.println();
         for (int i = 0; i < SIZE; i++) {
