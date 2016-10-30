@@ -4,22 +4,36 @@ class Game {
     private final int GAME_SIZE = 15;
     private final int MAX_SHIP_SIZE = 3;
     private final String GAME_NAME = "Game SeaBattle!";
-    private final int SHIPS_COUNT = 3;
+    private final int SHIPS_COUNT = 4;
+    private Ship[] ships;
 
     void playGame() {
-        Field field = new Field(GAME_SIZE);
         Player player = new Player();
-        Ship ship = new Ship(MAX_SHIP_SIZE);
 
-        ship.generatePosition(GAME_SIZE);
+        ships = new Ship[SHIPS_COUNT];
+        int shipSize = 1;
+        for (int i = 0; i < SHIPS_COUNT; i++) {
+            ships[i] = new Ship(shipSize);
+            if (shipSize < MAX_SHIP_SIZE) {
+                shipSize++;
+            } else {
+                shipSize = 1;
+            }
+        }
 
-        boolean shipSetted;  //TODO цикл переделать
-        do {
-           shipSetted = field.setShip(ship);
-        } while (!shipSetted);
+        Field field = new Field(GAME_SIZE, ships);
+
+        for (int i = 0; i < SHIPS_COUNT; i++) {
+            boolean shipSetted;
+            do {
+                ships[i].generatePosition(GAME_SIZE);
+                shipSetted = field.setShip(ships[i]);
+            } while (!shipSetted);
+        }
 
         System.out.println(GAME_NAME);
         player.setName();
+        System.out.printf("Вам нужно потопить %d кораблей%n", SHIPS_COUNT);
 
         do {
             field.showField();

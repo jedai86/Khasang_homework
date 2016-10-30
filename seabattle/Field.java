@@ -7,12 +7,15 @@ class Field {
     private final char SHIP_CELL = 'X';
     private final char SHIP_DAMAGED = '#';
     private final char SHOOTED_CELL = '*';
-    private Ship ship;
+    private Ship[] ships;
+    private int shipsAliveCount;
 
-    Field(final int size) {
+    Field(final int size, final Ship[] ships) {
         this.SIZE = size;
         this.field = new char[size];
+        this.ships = ships;
         this.initialize();
+        this.shipsAliveCount = ships.length;
     }
 
     void initialize() {
@@ -33,36 +36,49 @@ class Field {
                 break;
             case SHIP_CELL:
                 field[shoot] = SHIP_DAMAGED;
-                ship.damageShip(1);
-                if (isKilled()) {
-                    System.out.println("Убит!");
+                int i = findShipIndex(shoot);
+                ships[i].damageShip();
+                if (ships[i].isKilled()) {
+                    System.out.print("Этот корбаль убит! ");
+                    shipsAliveCount--;
+                    System.out.printf("Вам осталось %d кораблей%n", shipsAliveCount);
                 } else {
-                    System.out.println("Ранен!");
+                    System.out.println("Этот корабль ранен!");
                 }
                 break;
         }
     }
 
-    boolean isKilled() {  //TODO переместить в класс Ship?
-        return ship.getHealth() == 0;
+    int findShipIndex(int coordinate) {
+        for (int i = 0; i < ships.length; i++) {
+            if (coordinate >= ships[i].getPosition() && coordinate < (ships[i].getPosition() + ships[i].getSize())) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     boolean continueGame() {
-        return !isKilled();
+        return shipsAliveCount > 0;
     }
 
-    boolean isValidCell(final int position) {
-        return (position < SIZE) && (field[position] == EMPTY_CELL);
+    boolean isValidCell(final int position, final int size) {
+        if (position >= SIZE) {
+            return false;
+        }
+        for (int i = 0; i < size; i++) {
+            if (field[position + i] != EMPTY_CELL) return false;
+        }
+        return true;
     }
 
     boolean setShip(Ship ship) {
-        this.ship = ship;
-        for (int i = 0; i < ship.getSize(); i++) {
-            if (isValidCell(ship.getPosition() + i)) {
+        if (isValidCell(ship.getPosition(), ship.getSize())) {
+            for (int i = 0; i < ship.getSize(); i++) {
                 field[ship.getPosition() + i] = SHIP_CELL;
-            } else {
-                return false;
             }
+        } else {
+            return false;
         }
         return true;
     }
@@ -70,11 +86,11 @@ class Field {
     void showField() {
         printLines();
         for (int i = 0; i < SIZE; i++) {
-            if (field[i] == SHIP_CELL) {
-                System.out.print(EMPTY_CELL + "  ");
-            } else {
-                System.out.print(field[i] + "  ");
-            }
+            //       if (field[i] == SHIP_CELL) {
+            //           System.out.print(EMPTY_CELL + "  ");
+            //       } else {
+            System.out.print(field[i] + "  ");
+            //       }
         }
         System.out.println();
         for (int i = 0; i < SIZE; i++) {
@@ -89,7 +105,7 @@ class Field {
     }
 
     void printLines() {
-        for (int i = 0; i < (SIZE+SIZE/2); i++) {
+        for (int i = 0; i < (SIZE + SIZE / 2); i++) {
             System.out.print("==");
         }
         System.out.println();

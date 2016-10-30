@@ -25,11 +25,11 @@ class Ship {
         return size;
     }
 
-    int getHealth() {
-        return health;
+    void damageShip() {
+        health--;
     }
 
-    void damageShip(final int damage) {
-        health = health - damage;
+    boolean isKilled() {
+        return health == 0;
     }
 }
