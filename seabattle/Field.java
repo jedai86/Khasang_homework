@@ -2,7 +2,7 @@ package seabattle;
 
 class Field {
     private final int SIZE;
-    private final char[] field;
+    private final char[] FIELD;
     private final char EMPTY_CELL = '.';
     private final char SHIP_CELL = 'X';
     private final char SHIP_DAMAGED = '#';
@@ -12,7 +12,7 @@ class Field {
 
     Field(final int size, final Ship[] ships) {
         this.SIZE = size;
-        this.field = new char[size];
+        this.FIELD = new char[size];
         this.ships = ships;
         this.initialize();
         this.shipsAliveCount = ships.length;
@@ -20,22 +20,22 @@ class Field {
 
     void initialize() {
         for (int i = 0; i < SIZE; i++) {
-            field[i] = EMPTY_CELL;
+            FIELD[i] = EMPTY_CELL;
         }
     }
 
     void doShoot(final int shoot) throws ArrayIndexOutOfBoundsException {
-        switch (field[shoot]) {
+        switch (FIELD[shoot]) {
             case EMPTY_CELL:
                 System.out.println("Промах! ");
-                field[shoot] = SHOOTED_CELL;
+                FIELD[shoot] = SHOOTED_CELL;
                 break;
             case SHOOTED_CELL:
             case SHIP_DAMAGED:
                 System.out.println("Уже стреляли!");
                 break;
             case SHIP_CELL:
-                field[shoot] = SHIP_DAMAGED;
+                FIELD[shoot] = SHIP_DAMAGED;
                 int i = findShipIndex(shoot);
                 ships[i].damageShip();
                 if (ships[i].isKilled()) {
@@ -67,7 +67,7 @@ class Field {
             return false;
         }
         for (int i = 0; i < size; i++) {
-            if (field[position + i] != EMPTY_CELL) return false;
+            if (FIELD[position + i] != EMPTY_CELL) return false;
         }
         return true;
     }
@@ -75,7 +75,7 @@ class Field {
     boolean setShip(Ship ship) {
         if (isValidCell(ship.getPosition(), ship.getSize())) {
             for (int i = 0; i < ship.getSize(); i++) {
-                field[ship.getPosition() + i] = SHIP_CELL;
+                FIELD[ship.getPosition() + i] = SHIP_CELL;
             }
         } else {
             return false;
@@ -86,10 +86,10 @@ class Field {
     void showField() {
         printLines();
         for (int i = 0; i < SIZE; i++) {
-            if (field[i] == SHIP_CELL) {
+            if (FIELD[i] == SHIP_CELL) {
                 System.out.print(EMPTY_CELL + "  ");
             } else {
-                System.out.print(field[i] + "  ");
+                System.out.print(FIELD[i] + "  ");
             }
         }
         System.out.println();
