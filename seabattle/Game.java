@@ -5,7 +5,6 @@ class Game {
     private final int gameSize;
     private final int maxShipSize;
     private final int shipsCount;
-    private Ship[] ships;
 
     Game(final int gameSize, final int maxShipSize, final int shipsCount) {
         this.gameSize = gameSize;
@@ -16,7 +15,7 @@ class Game {
     void playGame() {
         Player player = new Player();
 
-        ships = new Ship[shipsCount];
+        Ship[] ships = new Ship[shipsCount];
         int shipSize = 1;
         for (int i = 0; i < shipsCount; i++) {
             ships[i] = new Ship(shipSize);
