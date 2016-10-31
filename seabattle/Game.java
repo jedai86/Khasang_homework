@@ -7,7 +7,7 @@ class Game {
     private final int shipsCount;
     private Ship[] ships;
 
-    Game(int gameSize, int maxShipSize, int shipsCount) {
+    Game(final int gameSize, final int maxShipSize, final int shipsCount) {
         this.gameSize = gameSize;
         this.maxShipSize = maxShipSize;
         this.shipsCount = shipsCount;

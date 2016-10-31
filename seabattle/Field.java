@@ -47,7 +47,7 @@ class Field {
         return shipsAliveCount > 0;
     }
 
-    boolean setShip(Ship ship) {
+    boolean setShip(final Ship ship) {
         if (isValidCell(ship.getPosition(), ship.getSize())) {
             for (int i = 0; i < ship.getSize(); i++) {
                 field[ship.getPosition() + i] = SHIP_CELL;
@@ -96,7 +96,7 @@ class Field {
         return true;
     }
 
-    private int findShipIndex(int coordinate) {
+    private int findShipIndex(final int coordinate) {
         for (int i = 0; i < ships.length; i++) {
             if (coordinate >= ships[i].getPosition() && coordinate < (ships[i].getPosition() + ships[i].getSize())) {
                 return i;
