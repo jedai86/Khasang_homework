@@ -1,41 +1,35 @@
 package seabattle;
 
 class Field {
-    private final int SIZE;
-    private final char[] FIELD;
     private final char EMPTY_CELL = '.';
     private final char SHIP_CELL = 'X';
     private final char SHIP_DAMAGED = '#';
     private final char SHOOTED_CELL = '*';
-    private Ship[] ships;
+    private final int size;
+    private final char[] field;
     private int shipsAliveCount;
+    private Ship[] ships;
 
     Field(final int size, final Ship[] ships) {
-        this.SIZE = size;
-        this.FIELD = new char[size];
+        this.size = size;
+        this.field = new char[size];
         this.ships = ships;
-        this.initialize();
         this.shipsAliveCount = ships.length;
-    }
-
-    void initialize() {
-        for (int i = 0; i < SIZE; i++) {
-            FIELD[i] = EMPTY_CELL;
-        }
+        this.initialize();
     }
 
     void doShoot(final int shoot) throws ArrayIndexOutOfBoundsException {
-        switch (FIELD[shoot]) {
+        switch (field[shoot]) {
             case EMPTY_CELL:
                 System.out.println("Промах! ");
-                FIELD[shoot] = SHOOTED_CELL;
+                field[shoot] = SHOOTED_CELL;
                 break;
             case SHOOTED_CELL:
             case SHIP_DAMAGED:
                 System.out.println("Уже стреляли!");
                 break;
             case SHIP_CELL:
-                FIELD[shoot] = SHIP_DAMAGED;
+                field[shoot] = SHIP_DAMAGED;
                 int i = findShipIndex(shoot);
                 ships[i].damageShip();
                 if (ships[i].isKilled()) {
@@ -49,33 +43,14 @@ class Field {
         }
     }
 
-    int findShipIndex(int coordinate) {
-        for (int i = 0; i < ships.length; i++) {
-            if (coordinate >= ships[i].getPosition() && coordinate < (ships[i].getPosition() + ships[i].getSize())) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     boolean continueGame() {
         return shipsAliveCount > 0;
-    }
-
-    boolean isValidCell(final int position, final int size) {
-        if (position >= SIZE) {
-            return false;
-        }
-        for (int i = 0; i < size; i++) {
-            if (FIELD[position + i] != EMPTY_CELL) return false;
-        }
-        return true;
     }
 
     boolean setShip(Ship ship) {
         if (isValidCell(ship.getPosition(), ship.getSize())) {
             for (int i = 0; i < ship.getSize(); i++) {
-                FIELD[ship.getPosition() + i] = SHIP_CELL;
+                field[ship.getPosition() + i] = SHIP_CELL;
             }
         } else {
             return false;
@@ -85,15 +60,15 @@ class Field {
 
     void showField() {
         printLines();
-        for (int i = 0; i < SIZE; i++) {
-            if (FIELD[i] == SHIP_CELL) {
+        for (int i = 0; i < size; i++) {
+            if (field[i] == SHIP_CELL) {
                 System.out.print(EMPTY_CELL + "  ");
             } else {
-                System.out.print(FIELD[i] + "  ");
+                System.out.print(field[i] + "  ");
             }
         }
         System.out.println();
-        for (int i = 0; i < SIZE; i++) {
+        for (int i = 0; i < size; i++) {
             if (i < 10) {
                 System.out.print(i + "  ");
             } else {
@@ -104,10 +79,35 @@ class Field {
         printLines();
     }
 
-    void printLines() {
-        for (int i = 0; i < (SIZE + SIZE / 2); i++) {
+    private void printLines() {
+        for (int i = 0; i < (size + size / 2); i++) {
             System.out.print("==");
         }
         System.out.println();
+    }
+
+    private boolean isValidCell(final int position, final int size) {
+        if (position >= this.size) {
+            return false;
+        }
+        for (int i = 0; i < size; i++) {
+            if (field[position + i] != EMPTY_CELL) return false;
+        }
+        return true;
+    }
+
+    private int findShipIndex(int coordinate) {
+        for (int i = 0; i < ships.length; i++) {
+            if (coordinate >= ships[i].getPosition() && coordinate < (ships[i].getPosition() + ships[i].getSize())) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private void initialize() {
+        for (int i = 0; i < size; i++) {
+            field[i] = EMPTY_CELL;
+        }
     }
 }
