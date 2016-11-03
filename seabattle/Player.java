@@ -15,20 +15,24 @@ class Player {
         return name;
     }
 
-    int getShoot() {
+    int getShoot(final String coordinateName, final int gameSize) {
         Scanner scan = new Scanner(System.in);
         int shoot;
-        System.out.printf("%s, введите координату выстрела: %n> ", name);
+        System.out.printf("%s, введите координату выстрела по оси %s: %n> ", name, coordinateName);
         while (true) {
             if (scan.hasNextInt()) {
                 shoot = scan.nextInt();
-                break;
+                if (shoot >= 0 && shoot < gameSize) {
+                    break;
+                } else {
+                    scan.nextLine();
+                    System.out.printf("Не правильная координата, введите другую: %n> ");
+                }
             } else {
                 scan.nextLine();
                 System.out.printf("Не правильная координата, введите другую: %n> ");
             }
         }
-        System.out.printf("%s, ваш выстрел: %d%n", name, shoot);
         return shoot;
     }
 }

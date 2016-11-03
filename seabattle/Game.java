@@ -5,6 +5,9 @@ class Game {
     private final int gameSize;
     private final int maxShipSize;
     private final int shipsCount;
+    private Player player;
+    private Ship[] ships;
+    private Field field;
 
     Game(final int gameSize, final int maxShipSize, final int shipsCount) {
         this.gameSize = gameSize;
@@ -13,9 +16,28 @@ class Game {
     }
 
     void playGame() {
-        Player player = new Player();
+        initialize();
+        System.out.println(GAME_NAME);
+        player.setName();
+        System.out.printf("Вам нужно потопить %d кораблей%n", shipsCount);
 
-        Ship[] ships = new Ship[shipsCount];
+        int shootCount = 0;
+        do {
+            field.showField();
+            int shootX = player.getShoot("X", gameSize);
+            int shootY = player.getShoot("Y", gameSize);
+            field.doShoot(shootX, shootY);
+            shootCount++;
+        } while (field.continueGame());
+
+        field.showField();
+        System.out.printf("%s, вы потопили все корабли за %d выстрелов!%n", player.getName(), shootCount);
+    }
+
+    private void initialize() {
+        player = new Player();
+
+        ships = new Ship[shipsCount];
         int shipSize = 1;
         for (int i = 0; i < shipsCount; i++) {
             ships[i] = new Ship(shipSize);
@@ -26,31 +48,14 @@ class Game {
             }
         }
 
-        Field field = new Field(gameSize, ships);
+        field = new Field(gameSize, ships);
 
         for (int i = 0; i < shipsCount; i++) {
             boolean shipSetted;
             do {
                 ships[i].generatePosition(gameSize);
-                shipSetted = field.setShip(ships[i]);
+                shipSetted = field.setShip(i);
             } while (!shipSetted);
         }
-
-        System.out.println(GAME_NAME);
-        player.setName();
-        System.out.printf("Вам нужно потопить %d кораблей%n", shipsCount);
-
-        do {
-            field.showField();
-            int shoot = player.getShoot();
-            try {
-                field.doShoot(shoot);
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("Не правильная координата!");
-            }
-        } while (field.continueGame());
-
-        field.showField();
-        System.out.printf("%s, вы потопили все корабли!", player.getName());
     }
 }

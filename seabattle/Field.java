@@ -2,31 +2,31 @@ package seabattle;
 
 class Field {
     private final int size;
-    private final Figure[] field;
+    private final Figure[][] field;
     private int shipsAliveCount;
     private Ship[] ships;
 
     Field(final int size, final Ship[] ships) {
         this.size = size;
-        this.field = new Figure[size];
+        this.field = new Figure[size][size];
         this.ships = ships;
         this.shipsAliveCount = ships.length;
         this.initialize();
     }
 
-    void doShoot(final int shoot) throws ArrayIndexOutOfBoundsException {
-        switch (field[shoot]) {
+    void doShoot(final int shootX, final int shootY) {
+        switch (field[shootX][shootY]) {
             case EMPTY:
                 System.out.println("Промах! ");
-                field[shoot] = Figure.MISSED;
+                field[shootX][shootY] = Figure.MISSED;
                 break;
             case MISSED:
             case DAMAGED:
                 System.out.println("Уже стреляли!");
                 break;
             case SHIP:
-                field[shoot] = Figure.DAMAGED;
-                int i = findShipIndex(shoot);
+                field[shootX][shootY] = Figure.DAMAGED;
+                int i = findShipIndex(shootX, shootY);
                 ships[i].damageShip();
                 if (ships[i].isKilled()) {
                     System.out.print("Этот корбаль убит! ");
@@ -43,10 +43,14 @@ class Field {
         return shipsAliveCount > 0;
     }
 
-    boolean setShip(final Ship ship) {
-        if (isValidCell(ship.getPosition(), ship.getSize())) {
-            for (int i = 0; i < ship.getSize(); i++) {
-                field[ship.getPosition() + i] = Figure.SHIP;
+    boolean setShip(final int shipIndex) {
+        if (isValidCell(shipIndex)) {
+            for (int i = 0; i < ships[shipIndex].getSize(); i++) {
+                if (ships[shipIndex].isDirectionX()) {
+                    field[ships[shipIndex].getPositionX() + i][ships[shipIndex].getPositionY()] = Figure.SHIP;
+                } else {
+                    field[ships[shipIndex].getPositionX()][ships[shipIndex].getPositionY() + i] = Figure.SHIP;
+                }
             }
         } else {
             return false;
@@ -56,14 +60,19 @@ class Field {
 
     void showField() {
         printLines();
-        for (int i = 0; i < size; i++) {
-            if (field[i] == Figure.SHIP) {
-                System.out.print(Figure.EMPTY + "  ");
-            } else {
-                System.out.print(field[i] + "  ");
+        for (int j = 0; j < size; j++) {
+            System.out.print(j + " ");
+            for (int i = 0; i < size; i++) {
+            //    if (field[i][j] == Figure.SHIP) {
+             //       System.out.print(Figure.EMPTY + "  ");
+            //    } else {
+                    System.out.print(field[i][j] + "  ");
+            //    }
             }
+            System.out.println();
         }
         System.out.println();
+        System.out.print("  ");
         for (int i = 0; i < size; i++) {
             if (i < 10) {
                 System.out.print(i + "  ");
@@ -82,19 +91,29 @@ class Field {
         System.out.println();
     }
 
-    private boolean isValidCell(final int position, final int size) {
-        if (position >= this.size) {
-            return false;
-        }
-        for (int i = 0; i < size; i++) {
-            if (field[position + i] != Figure.EMPTY) return false;
+    private boolean isValidCell(final int shipIndex) {
+        if (ships[shipIndex].isDirectionX()) {
+            for (int i = 0; i < ships[shipIndex].getSize(); i++) {
+                if (field[ships[shipIndex].getPositionX() + i][ships[shipIndex].getPositionY()] != Figure.EMPTY)
+                    return false;
+            }
+        } else {
+            for (int i = 0; i < ships[shipIndex].getSize(); i++) {
+                if (field[ships[shipIndex].getPositionX()][ships[shipIndex].getPositionY() + i] != Figure.EMPTY)
+                    return false;
+            }
         }
         return true;
     }
 
-    private int findShipIndex(final int coordinate) {
+    private int findShipIndex(final int coordinateX, final int coordinateY) {
         for (int i = 0; i < ships.length; i++) {
-            if (coordinate >= ships[i].getPosition() && coordinate < (ships[i].getPosition() + ships[i].getSize())) {
+            if ((coordinateX >= ships[i].getPositionX()
+                    && coordinateX < (ships[i].getPositionX() + ships[i].getSize())
+                    && coordinateY == ships[i].getPositionY())
+                    || (coordinateY >= ships[i].getPositionY()
+                    && coordinateY < (ships[i].getPositionY() + ships[i].getSize())
+                    && coordinateX == ships[i].getPositionX())) {
                 return i;
             }
         }
@@ -103,7 +122,9 @@ class Field {
 
     private void initialize() {
         for (int i = 0; i < size; i++) {
-            field[i] = Figure.EMPTY;
+            for (int j = 0; j < size; j++) {
+                field[i][j] = Figure.EMPTY;
+            }
         }
     }
 }
