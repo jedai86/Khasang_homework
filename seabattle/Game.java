@@ -8,17 +8,23 @@ class Game {
     private Player player;
     private Ship[] ships;
     private Field field;
+    private boolean debugMode;
 
-    Game(final int gameSize, final int maxShipSize, final int shipsCount) {
+    Game(final int gameSize, final int maxShipSize, final int shipsCount, final boolean debugMode) {
         this.gameSize = gameSize;
         this.maxShipSize = maxShipSize;
         this.shipsCount = shipsCount;
+        this.debugMode = debugMode;
     }
 
     void playGame() {
-        initialize();
+        initializeGame();
         System.out.println(GAME_NAME);
-        player.setName();
+        if (debugMode) {
+            printShipsInfo();
+        } else {
+            player.setName();
+        }
         System.out.printf("Вам нужно потопить %d кораблей%n", shipsCount);
 
         int shootCount = 0;
@@ -34,9 +40,13 @@ class Game {
         System.out.printf("%s, вы потопили все корабли за %d выстрелов!%n", player.getName(), shootCount);
     }
 
-    private void initialize() {
+    private void initializeGame() {
         player = new Player();
+        initializeShips();
+        initializeField();
+    }
 
+    private void initializeShips() {
         ships = new Ship[shipsCount];
         int shipSize = 1;
         for (int i = 0; i < shipsCount; i++) {
@@ -47,15 +57,23 @@ class Game {
                 shipSize = 1;
             }
         }
+    }
 
-        field = new Field(gameSize, ships);
-
+    private void initializeField() {
+        field = new Field(gameSize, ships, debugMode);
         for (int i = 0; i < shipsCount; i++) {
             boolean shipSetted;
             do {
                 ships[i].generatePosition(gameSize);
                 shipSetted = field.setShip(i);
             } while (!shipSetted);
+        }
+    }
+
+    private void printShipsInfo() {
+        for (int i = 0; i < shipsCount; i++) {
+            System.out.printf("Ship# %d: posXY: %d, %d; size: %d; dirХ: %s.%n",
+                    i, ships[i].getPositionX(), ships[i].getPositionY(), ships[i].getSize(), ships[i].isDirectionX());
         }
     }
 }

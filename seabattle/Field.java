@@ -5,12 +5,14 @@ class Field {
     private final Figure[][] field;
     private int shipsAliveCount;
     private Ship[] ships;
+    private boolean debugMode;
 
-    Field(final int size, final Ship[] ships) {
+    Field(final int size, final Ship[] ships, final boolean debugMode) {
         this.size = size;
         this.field = new Figure[size][size];
         this.ships = ships;
         this.shipsAliveCount = ships.length;
+        this.debugMode = debugMode;
         this.initialize();
     }
 
@@ -60,16 +62,10 @@ class Field {
 
     void showField() {
         printLines();
-        for (int j = 0; j < size; j++) {
-            System.out.print(j + " ");
-            for (int i = 0; i < size; i++) {
-            //    if (field[i][j] == Figure.SHIP) {
-             //       System.out.print(Figure.EMPTY + "  ");
-            //    } else {
-                    System.out.print(field[i][j] + "  ");
-            //    }
-            }
-            System.out.println();
+        if (debugMode) {
+            showFieldWithShips();
+        } else {
+            showFieldSecure();
         }
         System.out.println();
         System.out.print("  ");
@@ -82,6 +78,30 @@ class Field {
         }
         System.out.println();
         printLines();
+    }
+
+    private void showFieldSecure() {
+        for (int j = 0; j < size; j++) {
+            System.out.print(j + " ");
+            for (int i = 0; i < size; i++) {
+                if (field[i][j] == Figure.SHIP) {
+                    System.out.print(Figure.EMPTY + "  ");
+                } else {
+                    System.out.print(field[i][j] + "  ");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    private void showFieldWithShips() {
+        for (int j = 0; j < size; j++) {
+            System.out.print(j + " ");
+            for (int i = 0; i < size; i++) {
+                System.out.print(field[i][j] + "  ");
+            }
+            System.out.println();
+        }
     }
 
     private void printLines() {
