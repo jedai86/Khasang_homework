@@ -130,13 +130,18 @@ class Field {
 
     private int findShipIndex(final int coordinateX, final int coordinateY) {
         for (int i = 0; i < ships.length; i++) {
-            if ((coordinateX >= ships[i].getPositionX()
-                    && coordinateX < (ships[i].getPositionX() + ships[i].getSize())
-                    && coordinateY == ships[i].getPositionY())
-                    || (coordinateY >= ships[i].getPositionY()
-                    && coordinateY < (ships[i].getPositionY() + ships[i].getSize())
-                    && coordinateX == ships[i].getPositionX())) {
-                return i;
+            if (ships[i].isDirectionX()) {
+                if (coordinateX >= ships[i].getPositionX()
+                        && coordinateX < (ships[i].getPositionX() + ships[i].getSize())
+                        && coordinateY == ships[i].getPositionY()) {
+                    return i;
+                }
+            } else {
+                if (coordinateY >= ships[i].getPositionY()
+                        && coordinateY < (ships[i].getPositionY() + ships[i].getSize())
+                        && coordinateX == ships[i].getPositionX()) {
+                    return i;
+                }
             }
         }
         return -1;
