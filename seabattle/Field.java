@@ -61,14 +61,33 @@ class Field {
     }
 
     void showField() {
-        printLines();
-        if (debugMode) {
-            showFieldWithShips();
-        } else {
-            showFieldSecure();
+        showSeparator();
+        showAxisX();
+        showFieldArray();
+        showAxisX();
+        showSeparator();
+    }
+
+    private void showFieldArray() {
+        for (int j = 0; j < size; j++) {
+            showAxisY(j);
+            for (int i = 0; i < size; i++) {
+                if (debugMode) {
+                    System.out.print(field[i][j] + "  ");
+                } else {
+                    if (field[i][j] == Figure.SHIP) {
+                        System.out.print(Figure.EMPTY + "  ");
+                    } else {
+                        System.out.print(field[i][j] + "  ");
+                    }
+                }
+            }
+            System.out.println();
         }
-        System.out.println();
-        System.out.print("  ");
+    }
+
+    private void showAxisX() {
+        System.out.print("   ");
         for (int i = 0; i < size; i++) {
             if (i < 10) {
                 System.out.print(i + "  ");
@@ -77,35 +96,18 @@ class Field {
             }
         }
         System.out.println();
-        printLines();
     }
 
-    private void showFieldSecure() {
-        for (int j = 0; j < size; j++) {
-            System.out.print(j + " ");
-            for (int i = 0; i < size; i++) {
-                if (field[i][j] == Figure.SHIP) {
-                    System.out.print(Figure.EMPTY + "  ");
-                } else {
-                    System.out.print(field[i][j] + "  ");
-                }
-            }
-            System.out.println();
+    private void showAxisY(int n) {
+        if (n < 10) {
+            System.out.print(n + "  ");
+        } else {
+            System.out.print(n + " ");
         }
     }
 
-    private void showFieldWithShips() {
-        for (int j = 0; j < size; j++) {
-            System.out.print(j + " ");
-            for (int i = 0; i < size; i++) {
-                System.out.print(field[i][j] + "  ");
-            }
-            System.out.println();
-        }
-    }
-
-    private void printLines() {
-        for (int i = 0; i < (size + size / 2); i++) {
+    private void showSeparator() {
+        for (int i = 0; i < (size + size / 2 + 1); i++) {
             System.out.print("==");
         }
         System.out.println();

@@ -5,7 +5,7 @@ package seabattle;
  */
 public class SeaBattle {
     public static void main(String[] args) {
-        Game game = new Game(12, 4, 10, true);
+        Game game = new Game(11, 4, 10, true);
         game.playGame();
     }
 }
