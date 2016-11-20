@@ -17,7 +17,7 @@ class BookManager {
     }
 
     void start() {
-        do {
+        while (true) {
             menu.printMenu();
             switch (menu.getMenuItemFromUser()) {
                 case FIRST:
@@ -26,21 +26,25 @@ class BookManager {
                     System.out.println("Введите нзвание книги: ");
                     String title = getString();
                     count++;
-                    book = new Book(count,title, author);
+                    book = new Book(count, title, author);
                     books.addBook(book);
                     break;
                 case SECOND:
                     books.printAllBooks();
                     break;
                 case THIRD:
-                    System.out.println("Введите ID книги для удаления");
-                    int id = getNumberId();
-                    books.deleteBook(id);
-                    break;
+                    if (books.getCount() == 0) {
+                        System.out.println("Книг нет");
+                        break;
+                    } else {
+                        int id = getNumberId();
+                        books.deleteBook(id);
+                        break;
+                    }
                 case LAST:
                     return;
             }
-        } while (true);
+        }
     }
 
     String getString() {
@@ -49,19 +53,13 @@ class BookManager {
     }
 
     int getNumberId() {
-        Scanner scan = new Scanner(System.in);
-        int num;
+        int id;
+        System.out.println("Введите ID книги для удаления");
         while (true) {
-            if (scan.hasNextInt()) {
-                num = scan.nextInt();
-                if (num > 0 && num <= count) {
-                    return num;
-                } else {
-                    scan.nextLine();
-                    System.out.printf("Неправильный ID! Введите еще раз%n>");
-                }
+            id = menu.getNumberFromUser();
+            if (id > 0 && id <= count) {
+                return id;
             } else {
-                scan.nextLine();
                 System.out.printf("Неправильный ID! Введите еще раз%n>");
             }
         }

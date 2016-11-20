@@ -21,6 +21,10 @@ class Books {
         }
     }
 
+    int getCount() {
+        return books.size();
+    }
+
     void printAllBooks() {
         System.out.println("-----------------");
         if (books.size() != 0) {
