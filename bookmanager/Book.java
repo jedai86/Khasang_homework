@@ -12,6 +12,10 @@ class Book {
         this.author = author;
     }
 
+    public int getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return id + ". " + author + " - " + title + ".";

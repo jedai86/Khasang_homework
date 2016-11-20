@@ -33,7 +33,9 @@ class BookManager {
                     books.printAllBooks();
                     break;
                 case THIRD:
-                    System.out.println("Cant delete");
+                    System.out.println("Введите ID книги для удаления");
+                    int id = getNumberId();
+                    books.deleteBook(id);
                     break;
                 case LAST:
                     return;
@@ -44,5 +46,24 @@ class BookManager {
     String getString() {
         Scanner scan = new Scanner(System.in);
         return scan.nextLine();
+    }
+
+    int getNumberId() {
+        Scanner scan = new Scanner(System.in);
+        int num;
+        while (true) {
+            if (scan.hasNextInt()) {
+                num = scan.nextInt();
+                if (num > 0 && num <= count) {
+                    return num;
+                } else {
+                    scan.nextLine();
+                    System.out.printf("Неправильный ID! Введите еще раз%n>");
+                }
+            } else {
+                scan.nextLine();
+                System.out.printf("Неправильный ID! Введите еще раз%n>");
+            }
+        }
     }
 }

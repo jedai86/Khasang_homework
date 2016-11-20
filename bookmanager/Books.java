@@ -13,13 +13,23 @@ class Books {
         books.add(book);
     }
 
-    void deleteBook(Book book) {
-        books.remove(book);
+    void deleteBook(int id) {
+        for (int i = 0; i < books.size(); i++) {
+            if (books.get(i).getId() == id) {
+                books.remove(i);
+            }
+        }
     }
 
     void printAllBooks() {
-        for (Book book : books) {
-            System.out.println(book);
+        System.out.println("-----------------");
+        if (books.size() != 0) {
+            for (Book book : books) {
+                System.out.println(book);
+            }
+        } else {
+            System.out.println("Книг нет!");
         }
+        System.out.println("-----------------");
     }
 }
