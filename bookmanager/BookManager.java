@@ -47,12 +47,12 @@ class BookManager {
         }
     }
 
-    String getString() {
+    private String getString() {
         Scanner scan = new Scanner(System.in);
         return scan.nextLine();
     }
 
-    int getNumberId() {
+    private int getNumberId() {
         int id;
         System.out.println("Введите ID книги для удаления");
         while (true) {
