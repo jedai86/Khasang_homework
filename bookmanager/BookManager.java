@@ -1,18 +1,18 @@
 package bookmanager;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
  * Created by Jedai86 on 20.11.2016.
  */
 class BookManager {
-    private Book book;
-    private Books books;
+    private ArrayList<Book> books;
     private Menu menu;
     private int count;
 
     BookManager() {
-        books = new Books();
+        books = new ArrayList<>();
         menu = new Menu();
     }
 
@@ -26,19 +26,19 @@ class BookManager {
                     System.out.println("Введите нзвание книги: ");
                     String title = getString();
                     count++;
-                    book = new Book(count, title, author);
-                    books.addBook(book);
+                    Book book = new Book(count, title, author);
+                    addBook(book);
                     break;
                 case SECOND:
-                    books.printAllBooks();
+                    printAllBooks();
                     break;
                 case THIRD:
-                    if (books.getCount() == 0) {
+                    if (count == 0) {
                         System.out.println("Книг нет");
                         break;
                     } else {
                         int id = getNumberId();
-                        books.deleteBook(id);
+                        deleteBook(id);
                         break;
                     }
                 case LAST:
@@ -63,5 +63,29 @@ class BookManager {
                 System.out.printf("Неправильный ID! Введите еще раз%n>");
             }
         }
+    }
+
+    private void addBook(Book book) {
+        books.add(book);
+    }
+
+    private void deleteBook(int id) {
+        for (int i = 0; i < books.size(); i++) {
+            if (books.get(i).getId() == id) {
+                books.remove(i);
+            }
+        }
+    }
+
+    private void printAllBooks() {
+        System.out.println("-----------------");
+        if (books.size() != 0) {
+            for (Book book : books) {
+                System.out.println(book);
+            }
+        } else {
+            System.out.println("Книг нет!");
+        }
+        System.out.println("-----------------");
     }
 }
